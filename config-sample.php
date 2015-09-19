@@ -11,3 +11,5 @@ define('ROL_ADMIN', 50);
 define('DB_HOST', 'localhost');
 define('DB_PORT', '5432');
 define('DB_NAME', 'surveys');
+define('DB_USER', 'survey');
+define('DB_PASSWORD', 'password');

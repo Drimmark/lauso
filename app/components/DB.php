@@ -2,33 +2,38 @@
 
 class DB {
 
-	$user = DB_USER;	// user for the connection
-	$pass = DB_PASS;	// password of the user for the connection
-	$host = DB_HOST;	// hostname on which the database server resides
-	$port = DB_PORT;	// port on which the database server is running.
-	$dbn = DB_NAME;		// name of the database
+    private $host = DB_HOST;
+    private $port = DB_PORT;
+    private $name = DB_NAME;
+    private $user = DB_USER;
+    private $password = DB_PASSWORD;
+    private $connection;
+    private $stmt;
 
-	$dbc;				// db conection
-	$dbs;				// db statement
+    function __construct() {
+        $dsn = 'pgsql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->name;
+        $this->connection = new PDO($dsn, $this->user, $this->password);
+        $this->connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
+        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
 
-	function __construct() {
-		$dbc = new PDO('pgsql:host=' . $this->host . ':port=' . $this->port . 'dbname=' . $this->dbn,
-			$this->user, $this->pass);
-		$dbc->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-		$dbc->setAttribute(PDO::ATTR_CASE,PDO::CASE_LOWER);
-	}
+    public function query($query, $data = array()) {
+        $this->stmt = $this->connection->prepare($query);
 
-	public function run($query, $data = array()) {
-		$this->dbs = $dbc->prepare($query);
-		try {
-			$this->dbs->execute($data);
-		} catch (PDOException $e) {
-			print_r($e);
-			return false;
-		}
-	}
+        try {
+            return $this->stmt->execute($data);
+        } catch(PDOException $e) {
+            print_r($e);
+            return false;
+        }
+    }
 
-	public function data() {
-		return $this->dbs->fetchAll();
-	}
+    public function data() {
+        try {
+            return $this->stmt->fetchAll();
+        } catch(PDOException $e) {
+            print_r($e);
+            return false;
+        }
+    }
 }
