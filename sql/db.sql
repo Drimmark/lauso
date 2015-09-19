@@ -10,9 +10,10 @@ CREATE TABLE users (
 
 CREATE TABLE surveys (
        id serial PRIMARY KEY,
-       code varchar(5) NOT NULL,
+       code varchar(5) UNIQUE NOT NULL,
        name varchar(100) NOT NULL,
-       owner integer NOT NULL REFERENCES users (id)
+       owner integer NOT NULL REFERENCES users (id),
+       init_date date NOT NULL
 );
 
 CREATE TABLE questions (
@@ -24,7 +25,9 @@ CREATE TABLE questions (
 CREATE TABLE answers (
        id serial PRIMARY KEY,
        question integer NOT NULL REFERENCES questions (id),
-       content text NOT NULL
+       content text NOT NULL,
+       owner integer NOT NULL REFERENCES users (id),
+       init_date date NOT NULL
 );
 
 CREATE TABLE groups (

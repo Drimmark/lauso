@@ -10,7 +10,7 @@ $app = new $controller();
 $app->$action();
 
 function __autoload($class) {
-    $escapedClass = str_replace(array('.', '/'), ' ', $escapedClass);
+    $escapedClass = str_replace(array('.', '/'), ' ', $class);
 
     if(file_exists('app/controller/' . $escapedClass . '.php')) {
         include_once('app/controller/' . $escapedClass . '.php');
