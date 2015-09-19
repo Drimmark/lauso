@@ -2,7 +2,7 @@
 
 class Question {
     public $id;
-    public $survey;
+    public $survey;     //id of a Survey
     public $content;
 
 }

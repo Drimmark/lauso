@@ -24,6 +24,7 @@ CREATE TABLE questions (
 
 CREATE TABLE answers (
        id serial PRIMARY KEY,
+       survey integer NOT NULL REFERENCES surveys (id),
        question integer NOT NULL REFERENCES questions (id),
        content text NOT NULL,
        owner integer NOT NULL REFERENCES users (id),
