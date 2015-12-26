@@ -1,49 +1,58 @@
 CREATE TABLE users (
-       id serial PRIMARY KEY,
-       name varchar(100) NOT NULL,
-       surname varchar(100) NOT NULL,
-       rol integer DEFAULT 10,
-       email varchar(100) UNIQUE NOT NULL,
-       pass varchar(60) NOT NULL,
-       nick varchar(100) UNIQUE NOT NULL
+    user_id     serial PRIMARY KEY,
+    nick        varchar(100) NOT NULL UNIQUE,
+    name        varchar(100) NOT NULL,
+    surname     varchar(100) NOT NULL,
+    email       varchar(100) NOT NULL,
+    pass        varchar(60) NOT NULL,
+    rol         integer NOT NULL
 );
 
 CREATE TABLE surveys (
-       id serial PRIMARY KEY,
-       code varchar(5) UNIQUE NOT NULL,
-       name varchar(100) NOT NULL,
-       owner integer NOT NULL REFERENCES users (id),
-       init_date date NOT NULL
+    survey_id   serial PRIMARY KEY,
+    code        varchar(50) UNIQUE,
+    name        varchar(100) NOT NULL,
+    owner       integer NOT NULL REFERENCES users (user_id),
+    init_date   date NOT NULL
 );
 
 CREATE TABLE questions (
-       id serial PRIMARY KEY,
-       survey integer NOT NULL REFERENCES surveys (id),
-       content text NOT NULL
+    question_id     serial PRIMARY KEY,
+    content         text NOT NULL,
+    required        boolean DEFAULT true,
+    survey          integer NOT NULL REFERENCES surveys (survey_id)
+);
+
+CREATE TABLE radio_questions (
+    radio_question_id   serial PRIMARY KEY,
+    content             text NOT NULL,
+    question            integer NOT NULL REFERENCES question (question_id)
+);
+
+CREATE TABLE check_questions (
+    check_question_id   serial PRIMARY KEY,
+    content             text NOT NULL,
+    question            integer NOT NULL REFERENCES question (question_id)
 );
 
 CREATE TABLE answers (
-       id serial PRIMARY KEY,
-       survey integer NOT NULL REFERENCES surveys (id),
-       question integer NOT NULL REFERENCES questions (id),
-       content text NOT NULL,
-       owner integer NOT NULL REFERENCES users (id),
-       init_date date NOT NULL
+    answer_id       serial PRIMARY KEY,
+    content         text NOT NULL,
+    question        integer NOT NULL REFERENCES question (question_id),
+    owner           integer NOT NULL REFERENCES users (user_id)
 );
 
-CREATE TABLE groups (
-       id serial PRIMARY KEY,
-       name varchar(100) NOT NULL
+CREATE TABLE radio_answers (
+    radio_answer_id     serial PRIMARY KEY,
+    question            integer NOT NULL REFERENCES question (question_id),
+    answer              integer NOT NULL REFERENCES radio_questions (radio_question_id),
+    owner               integer NOT NULL REFERENCES users (user_id),
+    UNIQUE(question,owner)
 );
 
-CREATE TABLE groups_users (
-       id_group integer NOT NULL REFERENCES groups (id),
-       id_user integer NOT NULL REFERENCES users (id),
-       PRIMARY KEY(id_group, id_user)
-);
-
-CREATE TABLE groups_surveys (
-       id_group integer NOT NULL REFERENCES groups (id),
-       id_survey integer NOT NULL REFERENCES surveys (id),
-       PRIMARY KEY(id_group, id_survey)
+CREATE TABLE check_answers (
+    check_answer_id     serial PRIMARY KEY,
+    answer              integer NOT NULL REFERENCES check_questions (check_question_id),
+    owner               integer NOT NULL REFERENCES users (user_id),
+    UNIQUE(answer,owner)
 );
