@@ -1,3 +1,4 @@
+# -- It's only a structure, we're not using it
 CREATE TABLE users (
     user_id     serial PRIMARY KEY,
     nick        varchar(100) NOT NULL UNIQUE,
