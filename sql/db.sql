@@ -4,7 +4,7 @@ CREATE TABLE users (
     nick        varchar(100) NOT NULL UNIQUE,
     name        varchar(100) NOT NULL,
     surname     varchar(100) NOT NULL,
-    email       varchar(100) NOT NULL,
+    email       varchar(100) NOT NULL, UNIQUE,
     pass        varchar(60) NOT NULL,
     rol         integer NOT NULL
 );
