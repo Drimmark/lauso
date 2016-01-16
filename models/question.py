@@ -7,8 +7,13 @@ class Question(db.Model):
     required = db.Column(db.Boolean, default=True, nullable=False)
     survey = db.Column(db.Integer, db.ForeignKey('survey.id'), nullable=False)
 
-    def __init__(self):
-        pass
+    def __init__(self, id, cardinal, content, required, survey):
+        self.id = id
+        self.cardinal = cardinal
+        self.content = content
+        self.required = required
+        self.survey = survey
+
 
     def __repr__(self):
-        pass
+        return self.content
