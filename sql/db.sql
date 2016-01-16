@@ -10,15 +10,18 @@ CREATE TABLE users (
 );
 
 CREATE TABLE surveys (
-    survey_id   serial PRIMARY KEY,
-    code        varchar(50) UNIQUE,
-    name        varchar(100) NOT NULL,
-    owner       integer NOT NULL REFERENCES users (user_id),
-    init_date   date NOT NULL
+    survey_id       serial PRIMARY KEY,
+    code            varchar(50) UNIQUE,
+    name            varchar(100) NOT NULL,
+    owner           integer NOT NULL REFERENCES users (user_id),
+    description     text NOT NULL,
+    confirmation    text NOT NULL,
+    init_date       date NOT NULL
 );
 
 CREATE TABLE questions (
     question_id     serial PRIMARY KEY,
+    cardinal        integer NOT NULL,
     content         text NOT NULL,
     required        boolean DEFAULT true,
     survey          integer NOT NULL REFERENCES surveys (survey_id)
@@ -27,12 +30,14 @@ CREATE TABLE questions (
 CREATE TABLE radio_questions (
     radio_question_id   serial PRIMARY KEY,
     content             text NOT NULL,
+    cardinal            integer NOT NULL,
     question            integer NOT NULL REFERENCES question (question_id)
 );
 
 CREATE TABLE check_questions (
     check_question_id   serial PRIMARY KEY,
     content             text NOT NULL,
+    cardinal            integer NOT NULL,
     question            integer NOT NULL REFERENCES question (question_id)
 );
 
