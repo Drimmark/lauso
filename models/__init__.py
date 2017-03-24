@@ -1,5 +1,9 @@
 from models.basicmodel import *
-from models.user import *
-from models.question import *
-from models.answer import *
-from models.survey import *
+
+from .question import *
+from .answer import *
+from .survey import *
+from .check_answer import *
+from .check_question import *
+from .radio_answer import *
+from .radio_question import *
