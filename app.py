@@ -1,6 +1,7 @@
 from flask import Flask
 
 from api.baimen.baimen import login_module
+from api.survey import survey_module
 from models.basicmodel import db
 
 app = Flask(__name__)
@@ -10,6 +11,7 @@ db.app = app
 db.init_app(app)
 
 app.register_blueprint(login_module, url_prefix='/api/login')
+app.register_blueprint(survey_module, url_prefix='/api/survey')
 
 
 @app.route('/')
