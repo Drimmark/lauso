@@ -1,3 +1,4 @@
 config.cfg
 .idea/
 baimen/
+__pycache__/
