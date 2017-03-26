@@ -9,7 +9,7 @@ class Question(db.Model):
     required = db.Column(db.Boolean, default=True, nullable=False)
     survey = db.Column(db.Integer, db.ForeignKey('survey.id'), nullable=False)
 
-    answers = db.relationship('Answer', backref='question', lazy='select')
+    answers = db.relationship('Answer', lazy='select')
 
     def __init__(self, title, subtitle, cardinal, required, survey):
         self.title = title

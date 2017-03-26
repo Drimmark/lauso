@@ -4,7 +4,7 @@ from models.basicmodel import db
 class BoxAnswer(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     question = db.Column(db.Integer, db.ForeignKey('box_question.id'), nullable=False)
-    select_option = db.Column(db.Integer, db.ForeignKey('box_question.id'), nullable=False)
+    select_option = db.Column(db.Integer, db.ForeignKey('option.id'), nullable=False)
     owner = db.Column(db.Integer, nullable=False)
 
     def __init__(self, question, select_option, owner):
