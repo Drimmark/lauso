@@ -5,3 +5,5 @@ from .answer import *
 from .survey import *
 from .box_answer import *
 from .box_question import *
+from .slider_answer import *
+from .slider_question import *
