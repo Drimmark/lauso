@@ -12,12 +12,14 @@ def validate_input(model):
             }
             body = request.get_json(silent=True)
             if not type(body) is dict:
-                errors['error'].append('Body must be a json object')
+                errors['errors'].append('Body must be a json object')
                 return Response(response=json.dumps(errors),
                                 status=404,
                                 mimetype="application/json")
-
-            for attr in [attr for attr in model.__mapper__.column_attrs if not attr.expression.nullable]:
+            attributes = [attr
+                          for attr in model.__mapper__.column_attrs
+                          if not attr.expression.nullable and not attr.expression.primary_key]
+            for attr in attributes:
                 if attr.key not in body.keys():
                     errors['errors'].append('Field %s is required' % attr.key)
                     errors['fields'].append(attr.key)
