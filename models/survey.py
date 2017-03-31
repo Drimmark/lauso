@@ -5,7 +5,7 @@ from models.basicmodel import db
 
 class Survey(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    code = db.Column(db.String(50), index=True)
+    code = db.Column(db.String(50), nullable=False, index=True)
     name = db.Column(db.String(100), nullable=False)
     # owner is a reference to nia
     owner = db.Column(db.Integer, nullable=False)
